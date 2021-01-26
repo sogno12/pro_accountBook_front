@@ -1,11 +1,13 @@
 <template>
-    <div>
-Register
-    </div>
+<up-register></up-register>
 </template>
 
 <script>
+import UpRegister from "@/components/auth/UpRegister";
     export default {
+        components: {
+            UpRegister
+        }
         
     }
 </script>
