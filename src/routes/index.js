@@ -6,19 +6,32 @@ Vue.use(Router);
 
 const routes = [
   {
-    path: UP_PAGE.MAIN,
-    name: "home",
-    component: () => import("@/views/Login"),
-  },
-  {
     path: UP_PAGE.LOGIN,
     name: "Login",
-    component: () => import("@/views/Login"),
+    component: () => import("@/views/Login.vue"),
   },
   {
     path: UP_PAGE.REGISTER,
     name: "Register",
-    component: () => import("@/views/Register"),
+    component: () => import("@/views/Register.vue"),
+  },
+  {
+    path: UP_PAGE.MAIN,
+    name: "Main",
+    // beforeEnter: checkAuth,
+    component: () => import("@/views/Main.vue"),
+    redirect: UP_PAGE.HOME,
+    children: [
+      {
+        path: UP_PAGE.HOME,
+        name: "Home",
+        // beforeEnter: checkAuth,
+        component: () => import("@/views/dashboard/MyDashboard.vue"),
+        // meta: {
+        //   title: "common.lbl.home",
+        // },
+      },
+    ],
   },
 ];
 

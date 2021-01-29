@@ -29,7 +29,9 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" :to="UP_PAGE.REGISTER" text>To SignUp</v-btn>
+              <v-btn color="primary" :to="UP_PAGE.REGISTER" text
+                >To SignUp</v-btn
+              >
               <v-btn color="primary" @click="login">Login</v-btn>
             </v-card-actions>
           </v-card>
@@ -60,16 +62,28 @@ export default {
     };
   },
   methods: {
+    init() {
+      this.loginId = null;
+      this.loginPwd = null;
+    },
     async login() {
       const invalid = await this.$refs.loginFormObserver.validate();
       if (invalid) {
         let loginInfo = {
           loginId: this.loginId,
-          loginPwd: this.loginPwd,
+          loginPwd: this.CryptoJS.SHA256(this.loginPwd).toString(this.CryptoJS.enc.Hex),
         };
 
         try {
-          await $login(loginInfo);
+          const { data } = await $login(loginInfo);
+          const result = data.result;
+
+          if(result) {
+            alert("home");
+            this.$router.push(this.UP_PAGE.HOME).catch(()=>{});
+          } else {
+            this.init();
+          }
         } catch (error) {
           console.log("login ", error);
         }

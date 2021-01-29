@@ -27,12 +27,13 @@
                     label="New PWD"
                     v-model="form.loginPwd"
                     :rules="rules.loginPwd"
-                    vid="chekPwd"
+                    type="password"
                   ></up-text-field>
                   <up-text-field
                     label="Check PWD"
                     v-model="form.checkPwd"
                     :rules="rules.checkPwd"
+                    type="password"
                   ></up-text-field>
                   <up-text-field
                     label="EMAIL"
@@ -80,7 +81,6 @@ export default {
         },
         loginPwd: {
           required: true,
-          confirmed: "chekPwd",
         },
         checkPwd: {
           required: true,
@@ -102,11 +102,11 @@ export default {
           loginPwd: this.form.loginPwd,
           email: this.form.email,
         };
-
-        console.log("re", registerInfo);
-
         try {
           await $singUp(registerInfo);
+
+          alert("가입 성공!")
+          this.$router.push(this.UP_PAGE.LOGIN).catch(()=>{});
         } catch (error) {
           console.log("registerInfo ", error);
         }
