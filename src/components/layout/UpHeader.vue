@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="primary" dark app fixed>
+  <v-app-bar color="primary" dark fixed app clipped-left>
     <v-app-bar-nav-icon></v-app-bar-nav-icon>
     <v-app-bar-title>
       앱 헤더

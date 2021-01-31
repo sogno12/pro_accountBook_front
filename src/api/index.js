@@ -8,7 +8,7 @@ import axios from "axios";
 const $axios = function createInstance() {
   return axios.create({
     // baseURL: process.env.APP_API_URL,
-    baseURL: "http://192.168.0.37:9090/api/",
+    baseURL: "http://192.168.0.6:9090/api/",
   });
 };
 

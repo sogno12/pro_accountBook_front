@@ -76,15 +76,17 @@ export default {
 
         try {
           const { data } = await $login(loginInfo);
-          const result = data.result;
 
-          if(result) {
+          // 인증 성공 시, 토큰값 저장
+          this.authInfo = data.result;
+          this.$store.dispatch("auth/setAuthorization", this.authInfo);
+
+          // 메인페이지로 이동
             alert("home");
             this.$router.push(this.UP_PAGE.HOME).catch(()=>{});
-          } else {
-            this.init();
-          }
+
         } catch (error) {
+          this.init();
           console.log("login ", error);
         }
       }
