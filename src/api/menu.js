@@ -2,7 +2,7 @@
  * 메뉴 관리 API
  */
 
-import { apiNonAuth } from "@/api/index";
+import { apiAuth } from "@/api/index";
 
 const AUTH_PATH = {
     MENU: "up/menu", // 메뉴 API
@@ -10,7 +10,7 @@ const AUTH_PATH = {
 
 // 메뉴 Get API
 function $getMenu() {
-    return apiNonAuth.get(AUTH_PATH.MENU);
+    return apiAuth.get(AUTH_PATH.MENU);
 }
 
 export { $getMenu };

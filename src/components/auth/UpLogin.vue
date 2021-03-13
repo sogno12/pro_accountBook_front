@@ -23,6 +23,7 @@
                     v-model="loginPwd"
                     type="password"
                     :rules="rules.loginPwd"
+                    @keyup.enter="login"
                   ></up-text-field>
                 </v-form>
               </ValidationObserver>
@@ -79,6 +80,7 @@ export default {
 
           // 인증 성공 시, 토큰값 저장
           this.authInfo = data.result;
+          console.log("store"+ (this.$store));
           this.$store.dispatch("auth/setAuthorization", this.authInfo);
 
           // 메인페이지로 이동
@@ -87,6 +89,7 @@ export default {
 
         } catch (error) {
           this.init();
+          alert("로그인 실패");
           console.log("login ", error);
         }
       }

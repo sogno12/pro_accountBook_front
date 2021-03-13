@@ -3,6 +3,7 @@
  */
 
 export default {
+  namespaced: true,
   state: {
     authorization: {},
   },
@@ -16,7 +17,7 @@ export default {
         // 인증정보 삭제 시
         localStorage.removeItem("upab");
       }
-    },
+    }
   },
   getters: {
     /**
@@ -47,20 +48,21 @@ export default {
     },
   },
   actions: {
-        /**
-    * 인증값 설정 action
-    * @param {*} param0
-    * @param {*} authorization
-    */
+    /**
+     * 인증값 설정 action
+     * @param {*} param0
+     * @param {*} authorization
+     */
     setAuthorization({ commit }, authorization) {
+      console.log("auth!");
       commit("SET_AUTHORIZATION", authorization);
     },
     /**
-    * 인증값 초기화
-    * @param {*} param0
-    */
+     * 인증값 초기화
+     * @param {*} param0
+     */
     initAuthorization({ commit }) {
       commit("SET_AUTHORIZATION", null);
     },
-  }
+  },
 };

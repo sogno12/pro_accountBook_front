@@ -5,8 +5,8 @@ import auth from "@/stores/auth-store"; // 인증관련 vuex store 관리
 
 Vue.use(Vuex);
 
-export default new Vuex.store({
-  medules: {
+export default new Vuex.Store({
+  modules: {
     auth,
   },
   strict: false,

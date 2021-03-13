@@ -35,8 +35,12 @@ const routes = [
   },
 ];
 
+// function checkAuth() {
+//   return true;
+// }
+
 export default new Router({
   mode: "history",
-  base: process.env.APP_BASE_URL,
+  // base: process.env.VUE_APP_BASE_URL,
   routes: routes,
 });
