@@ -5,7 +5,23 @@
 export default {
   namespaced: true,
   state: {
-    authorization: {},
+    authorization: {
+      // 인증 정보
+      // accessToken: null,
+      // avatarUrl : null,
+      // deptId: null,
+      // expiresIn: null,
+      // features: [],
+      // localeCode: null,
+      // loginId: null,
+      // passwordChangedAt: null,
+      // refreshToken: null,
+      // tokenType: null,
+      // userNo: null
+      // userName: null
+      // isChangedInitPwd: false,
+      features: [],
+    },
   },
   mutations: {
     /**
@@ -17,7 +33,7 @@ export default {
         // 인증정보 삭제 시
         localStorage.removeItem("upab");
       }
-    }
+    },
   },
   getters: {
     /**
@@ -31,7 +47,8 @@ export default {
      */
     getAccessToken: (state) => {
       let accessToken = null;
-      if (state.authorization) {
+      if (state.authorization.tokenType) {
+        console.log("state", state.authorization);
         accessToken = `${state.authorization.tokenType} ${state.authorization.accessToken}`;
       }
       return accessToken;
@@ -54,7 +71,6 @@ export default {
      * @param {*} authorization
      */
     setAuthorization({ commit }, authorization) {
-      console.log("auth!");
       commit("SET_AUTHORIZATION", authorization);
     },
     /**
