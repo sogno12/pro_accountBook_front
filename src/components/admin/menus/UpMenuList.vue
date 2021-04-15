@@ -39,14 +39,8 @@
 </template>
 
 <script>
-import UpTreeview from "@/components/base/UpTreeview.vue";
-import UpMenuForm from "@/components/admin/menus/UpMenuForm";
 import { $getMenu } from "@/api/menu.js";
 export default {
-  components: {
-    UpTreeview,
-    UpMenuForm,
-  },
   data() {
     return {
       menus: [],

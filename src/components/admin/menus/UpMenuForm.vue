@@ -73,11 +73,7 @@ import {
   $updateMenu,
   $deleteMenu,
 } from "@/api/menu.js";
-import UpDialogForm from "@/components/base/UpDialogForm";
 export default {
-  components: {
-    UpDialogForm,
-  },
   props: {
     menuId: String,
     editMode: {

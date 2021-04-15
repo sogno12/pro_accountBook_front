@@ -8,11 +8,9 @@
 </template>
 
 <script>
-import UpSubject from '@/components/base/UpSubject.vue'
 import UpMenuList from '@/components/admin/menus/UpMenuList.vue'
     export default {
         components: {
-            UpSubject,
             UpMenuList,
         }        
     }

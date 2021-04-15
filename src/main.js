@@ -5,6 +5,8 @@ import router from '@/routes/index'
 import store from '@/stores/index'
 import "@/plugins/vee-validate";  //검증 플러그인
 import VueCryptojs from "vue-cryptojs"; //암호화 플러그인 vue-cryptojs (https://www.npmjs.com/package/vue-cryptojs)
+import "@/js/base-components";  // Base 컴포넌트 전역등록
+
 
 Vue.config.productionTip = false
 Vue.use(VueCryptojs);

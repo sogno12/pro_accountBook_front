@@ -44,7 +44,7 @@ const routes = [
         path: UP_PAGE.MENUS,
         name: "Menus",
         beforeEnter: checkAuth,
-        component: () => import("@/views/system/Menus.vue"),
+        component: () => import("@/views/admin/Menus.vue"),
       },
     ],
   },

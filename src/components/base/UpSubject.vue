@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  //TODO 전부!
   data() {
     return {
       label: "메뉴명",
