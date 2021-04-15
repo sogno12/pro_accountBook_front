@@ -53,11 +53,9 @@ const routes = [
 /* 인증 확인 */
 async function checkAuth(to, from, next) {
   const accessToken = store.getters["auth/getAccessToken"];
-
   if (undefined != accessToken && null != accessToken) {
     try {
       const { data } = await $checkAuth();
-      console.log("checkAuth", data);
       if (data.status == 200) {
         next();
       }

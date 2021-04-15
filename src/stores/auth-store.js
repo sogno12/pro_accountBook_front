@@ -47,8 +47,7 @@ export default {
      */
     getAccessToken: (state) => {
       let accessToken = null;
-      if (state.authorization.tokenType) {
-        console.log("state", state.authorization);
+      if (state.authorization) {
         accessToken = `${state.authorization.tokenType} ${state.authorization.accessToken}`;
       }
       return accessToken;

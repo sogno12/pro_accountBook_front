@@ -18,20 +18,18 @@ const $axios = function createInstance() {
   });
 };
 
+// 인정을 가진 요청
 const $axiosWithAuth = function createdInstance() {
+  const instance = axios.create({
+    baseURL: process.env.VUE_APP_API_URL,
+    paramsSerializer: (params) => {
+      return qs.stringify(params, { arrayFormat: "repeat" });
+    },
+  });
 
   // interceptor로 token 셋팅
-  return setInterceptors(
-    axios.create({
-      baseURL: process.env.VUE_APP_API_URL,
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    })
-  );
-}
-
-
+  return setInterceptors(instance);
+};
 
 export const apiNonAuth = $axios();
 export const apiAuth = $axiosWithAuth();
