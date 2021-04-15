@@ -16,12 +16,12 @@ export const UP_PAGE = {
   /**
    * MyAccountBook
    */
-  MY_ACCOUNT: "/myAccount/:account",
+  MY_ACCOUNTS: "/myAccount/:account",
 
   /**
    * CoAccountBook
    */
-  OUR_ACCOUNT: "/ourAccount/:account",
+  OUR_ACCOUNTS: "/ourAccount/:account",
 
   /**
    * MyInfo
@@ -30,7 +30,15 @@ export const UP_PAGE = {
   /**
    * Admin
    */
-  USER: '/admin/user'
+  USERS: '/admin/users',
+
+  /**
+   * System
+   */
+  MENUS: '/system/menus',
+  ROLES: '/system/roles',
+  RULES: '/system/rules',
+
 };
 
 Vue.prototype.UP_PAGE = UP_PAGE;
