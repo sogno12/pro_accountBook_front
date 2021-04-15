@@ -5,6 +5,8 @@
       앱 헤더
     </v-app-bar-title>
     <v-spacer></v-spacer>
+    1. 머니 캘린더
+    2. 프로필(개인정보)
   </v-app-bar>
 </template>
 
