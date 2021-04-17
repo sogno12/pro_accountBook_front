@@ -29,7 +29,7 @@
               <span>
                 <v-btn
                   v-if="active"
-                  color="secondary"
+                  color="success"
                   fab
                   dark
                   x-small

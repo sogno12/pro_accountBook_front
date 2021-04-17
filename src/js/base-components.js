@@ -15,8 +15,6 @@ const requireComponents = require.context("@/components/base", true, /\.vue$/);
 
 requireComponents.keys().forEach((fileName) => {
   const component = requireComponents(fileName);
-  console.log("file",fileName);
-
   const componentName = upperFirst(
     camelCase(fileName.replace(/^\.\//, "").replace(/\.\w+$/, ""))
   );

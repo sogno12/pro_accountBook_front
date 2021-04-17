@@ -18,7 +18,7 @@
           <span>
             <v-btn
               v-if="useBtn('add')"
-              color="secondary"
+              color="success"
               tile
               dark
               class="ml-1"
