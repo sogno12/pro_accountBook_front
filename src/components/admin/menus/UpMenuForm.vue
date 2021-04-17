@@ -1,65 +1,82 @@
 <template>
   <div>
     <up-dialog-form
-      title="메뉴 추가"
+      :title="title"
       :type="type"
-      @addItem="addMenu"
-      @editItem="editMenu"
+      @addItem="createMenu"
+      @editItem="updateMenu"
       @deleteItem="deleteMenu"
     >
       <template #contents>
         <v-col>
-          <v-row class="ma-0" dense>
-            <v-col>
-              <v-text-field v-model="form.upMenuId" label="상위 메뉴" disabled>
-              </v-text-field>
-            </v-col>
-            <v-col>
-              <v-text-field
-                v-model="form.menuId"
-                label="메뉴아이디"
-                :disabled="editMode == 'edit' ? true : false"
-              >
-              </v-text-field>
-            </v-col>
-          </v-row>
-          <v-row class="ma-0" dense>
-            <v-col>
-              <v-text-field v-model="form.menuName" label="메뉴명">
-              </v-text-field>
-            </v-col>
-            <v-col>
-              <v-text-field
-                v-model="form.menuType"
-                label="메뉴타입"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row class="ma-0" dense>
-            <v-col>
-              <v-text-field v-model="form.menuPath" label="메뉴경로">
-              </v-text-field>
-            </v-col>
-            <v-col>
-              <v-text-field v-model="form.menuIcon" label="메뉴아이콘">
-              </v-text-field>
-            </v-col>
-          </v-row>
-          <v-row class="ma-0" dense>
-            <v-col>
-              <v-text-field v-model="form.description" label="설명">
-              </v-text-field>
-            </v-col>
-          </v-row>
-          <v-row class="ma-0" dense>
-            <v-col>
-              <v-text-field
-                v-model="form.sortNo"
-                type="number"
-                label="정렬순서"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <ValidationObserver ref="form">
+            <v-row class="ma-0" dense>
+              <v-col>
+                <up-text-field
+                  v-model="form.upMenuId"
+                  label="상위 메뉴"
+                  disabled
+                >
+                </up-text-field>
+              </v-col>
+              <v-col>
+                <up-text-field
+                  v-model="form.menuId"
+                  label="메뉴아이디"
+                  :disabled="editMode == 'edit' ? true : false"
+                  :rules="rules.menuId"
+                >
+                </up-text-field>
+              </v-col>
+            </v-row>
+            <v-row class="ma-0" dense>
+              <v-col>
+                <up-text-field
+                  v-model="form.menuName"
+                  label="메뉴명"
+                  :rules="rules.menuName"
+                >
+                </up-text-field>
+              </v-col>
+              <v-col>
+                <up-text-field
+                  v-model="form.menuType"
+                  label="메뉴타입"
+                  :rules="rules.menuType"
+                ></up-text-field>
+              </v-col>
+            </v-row>
+            <v-row class="ma-0" dense>
+              <v-col>
+                <up-text-field
+                  v-model="form.menuPath"
+                  label="메뉴경로"
+                  :rules="rules.menuPath"
+                >
+                </up-text-field>
+              </v-col>
+              <v-col>
+                <up-text-field v-model="form.menuIcon" label="메뉴아이콘">
+                </up-text-field>
+              </v-col>
+            </v-row>
+            <v-row class="ma-0" dense>
+              <v-col>
+                <up-text-field v-model="form.description" label="설명">
+                </up-text-field>
+              </v-col>
+            </v-row>
+            <v-row class="ma-0" dense>
+              <v-col>
+                <up-text-field
+                  v-model="form.sortNo"
+                  type="number"
+                  label="정렬순서"
+                  :rules="rules.sortNo"
+                ></up-text-field>
+              </v-col>
+            </v-row>
+          </ValidationObserver>
         </v-col>
       </template>
     </up-dialog-form>
@@ -67,6 +84,7 @@
 </template>
 
 <script>
+import { ValidationObserver } from "vee-validate";
 import {
   $getMenuDetail,
   $createMenu,
@@ -74,6 +92,9 @@ import {
   $deleteMenu,
 } from "@/api/menu.js";
 export default {
+  components: {
+    ValidationObserver,
+  },
   props: {
     menuId: String,
     editMode: {
@@ -92,6 +113,16 @@ export default {
           return ["add"];
       }
     },
+    title() {
+      switch (this.editMode) {
+        case "add":
+          return "메뉴 추가";
+        case "edit":
+          return "메뉴 수정";
+        default:
+          return "메뉴 추가";
+      }
+    },
   },
   data() {
     return {
@@ -105,10 +136,28 @@ export default {
         description: "",
         menuType: "",
       },
+      rules: {
+        menuId: {
+          required: true,
+          alpha_dash: true,
+        },
+        menuName: {
+          required: true,
+        },
+        menuType: {
+          required: true,
+        },
+        menuPath: {
+          required: true,
+        },
+        sortNo: {
+          required: true,
+        },
+      },
     };
   },
   methods: {
-    init() {
+    async init() {
       this.form = {
         menuId: "",
         menuName: "",
@@ -119,6 +168,7 @@ export default {
         description: "",
         menuType: "",
       };
+      await this.getMenu();
     },
     async getMenu() {
       if (this.menuId != null) {
@@ -132,34 +182,38 @@ export default {
         }
       }
     },
-    async addMenu() {
-      // TODO 1. Validtion
-      try {
-        // 2. Form 정보 담기
-        const params = this.form;
-        // 3. 메뉴 생성
-        const { data } = await $createMenu(params);
-        // TODO 4. 성공메세지
-        alert("성공!" + data);
-        // 5. 성공 콘솔 닫기
-        this.$emit("close");
-      } catch (error) {
-        console.log("error", error);
+    async createMenu() {
+      // 1. Validtion
+      if (await this.$refs.form.validate()) {
+        try {
+          // 2. Form 정보 담기
+          const params = this.form;
+          // 3. 메뉴 생성
+          const { data } = await $createMenu(params);
+          // TODO 4. 성공메세지
+          alert("성공!" + data);
+          // 5. 성공 콘솔 닫기
+          this.$emit("close");
+        } catch (error) {
+          console.log("error", error);
+        }
       }
     },
-    async editMenu() {
-      // TODO 1. Validation
-      try {
-        // 2. Form 정보 담기
-        const params = this.form;
-        // 3. 메뉴 수정
-        const { data } = await $updateMenu(params);
-        // TODO 4. 성공메세지
-        alert("성공!" + data);
-        // 5. 성공 콘솔 닫기
-        this.$emit("close");
-      } catch (error) {
-        console.log("error", error);
+    async updateMenu() {
+      // 1. Validation
+      if (await this.$refs.form.validate()) {
+        try {
+          // 2. Form 정보 담기
+          const params = this.form;
+          // 3. 메뉴 수정
+          const { data } = await $updateMenu(params);
+          // TODO 4. 성공메세지
+          alert("성공!" + data);
+          // 5. 성공 다이얼로그 닫기
+          this.$emit("close");
+        } catch (error) {
+          console.log("error", error);
+        }
       }
     },
     async deleteMenu() {
@@ -168,7 +222,7 @@ export default {
         // 2. 메뉴 삭제
         await $deleteMenu(this.form.menuId);
         // TODO 3. 성공메세지
-        // 4. 성공 콘솔 닫기
+        // 4. 성공 다이얼로그 닫기
         this.$emit("close");
       } catch (error) {
         console.log("error", error);
@@ -176,16 +230,14 @@ export default {
     },
   },
   mounted() {
-    this.getMenu();
+    this.init();
   },
   watch: {
     menuId() {
       this.init();
-      this.getMenu();
     },
     editMode() {
       this.init();
-      this.getMenu();
     },
   },
 };

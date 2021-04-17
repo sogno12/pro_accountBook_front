@@ -11,7 +11,7 @@
             itemLabelField="menuName"
             :editable="true"
             @addItem="createMenu"
-            @editItem="editMenu"
+            @editItem="updateMenu"
             @removeItem="deleteMenu"
           >
             <template #appendTitle>
@@ -40,7 +40,11 @@
 
 <script>
 import { $getMenu } from "@/api/menu.js";
+import UpMenuForm from "@/components/admin/menus/UpMenuForm"
 export default {
+  components: {
+    UpMenuForm
+  },
   data() {
     return {
       menus: [],
@@ -64,7 +68,7 @@ export default {
       this.selectedMenuId = itemId;
       this.formDialog = true;
     },
-    editMenu(item) {
+    updateMenu(item) {
       this.editMode = 'edit';
       this.selectedMenuId = item.menuId;
       this.formDialog = true;
