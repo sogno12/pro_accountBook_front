@@ -6,7 +6,7 @@
       dense
       @addItem="createUser"
       @editItem="updateMenu"
-      @deleteItem="deleteUser"
+      @removeItem="deleteUser"
     >
       <template #contents>
         <v-col>
@@ -119,6 +119,7 @@ export default {
         userName: "",
         email: "",
       };
+      this.$refs.form.reset();
       await this.getUser();
     },
     async getUser() {

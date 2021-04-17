@@ -14,6 +14,14 @@
             @editItem="updateMenu"
             @removeItem="deleteMenu"
           >
+            <template #title-append>
+              <v-btn
+                color="success"
+                @click="createUpMenu"
+              >
+                추가
+              </v-btn>
+            </template>
             <template #appendTitle>
               <v-card-actions>
                 <v-btn tile outlined color="white" dark>
@@ -39,8 +47,8 @@
 </template>
 
 <script>
-import { $getMenu } from "@/api/menu.js";
-import UpMenuForm from "@/components/admin/menus/UpMenuForm"
+import { $getMenu, $deleteMenu } from "@/api/menu.js";
+import UpMenuForm from "@/components/system/menus/UpMenuForm"
 export default {
   components: {
     UpMenuForm
@@ -73,8 +81,23 @@ export default {
       this.selectedMenuId = item.menuId;
       this.formDialog = true;
     },
-    deleteMenu(item) {
-      console.log("deleteMenu", item);
+    async deleteMenu(item) {
+      // TODO 1. 메뉴 삭제 확인
+      try {
+        // 2. 메뉴 삭제
+        await $deleteMenu(item.menuId);
+        // TODO 3. 성공메세지
+        alert("성공!");
+        // 4. 성공 새로고침
+        this.close();
+      } catch (error) {
+        console.log("deleteMenu", error);
+      }
+    },
+    createUpMenu() {
+      this.editMode = 'add';
+      this.selectedMenuId = "root";
+      this.formDialog = true;
     },
     close() {
       this.selectedMenuId = null;

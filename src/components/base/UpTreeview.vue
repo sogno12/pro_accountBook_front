@@ -8,6 +8,7 @@
         <v-icon>{{ icon }}</v-icon>
         <v-toolbar-title class="px-1">{{ title }}</v-toolbar-title>
         <v-spacer></v-spacer>
+        <slot name="title-append"></slot>
       </v-toolbar>
       <v-card class="overflow-y-auto" :max-height="scrollHeight" flat>
         <v-treeview
@@ -63,7 +64,7 @@
                   x-small
                   class="ml-1"
                   elevation="3"
-                  @click.stop="deleteItem(item)"
+                  @click.stop="removeItem(item)"
                 >
                 <v-icon
                 small
@@ -152,8 +153,8 @@ export default {
     editItem(item){
         this.$emit("editItem", item.content);
     },
-    deleteItem(item){
-      this.$emit("deleteItem", item.content);
+    removeItem(item){
+      this.$emit("removeItem", item.content);
     }
   },
   watch: {

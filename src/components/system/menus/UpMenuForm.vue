@@ -39,11 +39,13 @@
                 </up-text-field>
               </v-col>
               <v-col>
-                <up-text-field
+                <v-select
                   v-model="form.menuType"
                   label="메뉴타입"
                   :rules="rules.menuType"
-                ></up-text-field>
+                  :items="selectType"
+                >
+                </v-select>
               </v-col>
             </v-row>
             <v-row class="ma-0" dense>
@@ -154,6 +156,9 @@ export default {
           required: true,
         },
       },
+      selectType: [
+        { text: "라우터", value: "ROUTE"}
+      ]
     };
   },
   methods: {
@@ -168,6 +173,7 @@ export default {
         description: "",
         menuType: "",
       };
+      this.$refs.form.reset();
       await this.getMenu();
     },
     async getMenu() {

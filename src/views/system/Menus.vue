@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import UpMenuList from '@/components/admin/menus/UpMenuList.vue'
+import UpMenuList from '@/components/system/menus/UpMenuList.vue'
     export default {
         components: {
             UpMenuList,
