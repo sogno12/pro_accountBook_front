@@ -3,7 +3,13 @@
     <v-card>
       <!-- 타이틀 -->
       <slot name="title">
-        <v-toolbar dark dense elevation="1" :color="toolbarType">
+        <v-toolbar
+          v-bind="$attrs"
+          v-on="$listeners"
+          dark
+          elevation="1"
+          :color="toolbarType"
+        >
           <v-toolbar-title>{{ title }}</v-toolbar-title>
         </v-toolbar>
       </slot>
@@ -73,15 +79,14 @@ export default {
   },
   computed: {
     toolbarType() {
-      switch (this.type) {
-        case "add":
-          return "primary lighten-2";
-        case "edit":
-          return "warning lighten-2";
-        default:
-          return "primary lighten-2";
+      if (this.type.includes("add")) {
+        return "primary lighten-2";
+      } else if (this.type.includes("edit")) {
+        return "warning lighten-2";
+      } else {
+        return "primary lighten-2";
       }
-    }
+    },
   },
   data() {
     return {};
@@ -98,7 +103,7 @@ export default {
     },
     useBtn(type) {
       return this.type.includes(type);
-    }
+    },
   },
 };
 </script>
