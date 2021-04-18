@@ -39,7 +39,7 @@
                 </up-text-field>
               </v-col>
               <v-col>
-                <v-select
+                <up-select
                   v-model="filters.status"
                   :items="selectStatus"
                   label="계정상태"
@@ -48,7 +48,7 @@
                   clearable
                   @change="searchUser"
                 >
-                </v-select>
+                </up-select>
               </v-col>
               <v-col>
                 <v-btn class="mx-1" color="secondary" @click="searchUser">

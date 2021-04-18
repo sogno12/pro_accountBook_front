@@ -8,9 +8,15 @@
     >
       <template #contents>
         <v-col>
-          <v-row class="ma-0" dense>
-            <v-select v-model="innerValue" :items="selectStatus"> </v-select>
-          </v-row>
+          <ValidationObserver ref="form">
+            <v-row class="ma-0" dense>
+              <up-select
+                v-model="innerValue"
+                :items="selectStatus"
+                :rules="rules.status"
+              ></up-select>
+            </v-row>
+          </ValidationObserver>
         </v-col>
       </template>
     </up-dialog-form>
@@ -18,8 +24,12 @@
 </template>
 
 <script>
-import { $chageStatus } from "@/api/user.js"
+import { ValidationObserver } from "vee-validate";
+import { $chageStatus } from "@/api/user.js";
 export default {
+  components: {
+    ValidationObserver,
+  },
   props: {
     userId: null,
     editMode: null,
@@ -45,25 +55,32 @@ export default {
         { text: "비활성", value: "INACTIVE" },
         { text: "잠김", value: "LOCKED" },
       ],
+      rules: {
+        status: {
+          required: true,
+        },
+      },
     };
   },
   methods: {
     async chageStatus() {
+      if (await this.$refs.form.validate()) {
         try {
-            // 1. userId와 status 담기
-            const params = {
-                userId : this.userId,
-                status : this.innerValue
-            };
-            // 2. 상태변경
-            await $chageStatus(params);
-            //TODO 3. 성공알림 
-            alert("성공!");
-            // 4. 다이얼로그 닫기
-            this.$emit("close");
+          // 1. userId와 status 담기
+          const params = {
+            userId: this.userId,
+            status: this.innerValue,
+          };
+          // 2. 상태변경
+          await $chageStatus(params);
+          //TODO 3. 성공알림
+          alert("성공!");
+          // 4. 다이얼로그 닫기
+          this.$emit("close");
         } catch (error) {
-            console.log("chageStatus", error);
+          console.log("chageStatus", error);
         }
+      }
     },
   },
 };

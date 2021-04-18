@@ -40,7 +40,10 @@
               </v-col>
             </v-row>
             <v-row class="ma-0" dense>
-              <v-select v-model="form.status" :items="selectStatus"> </v-select>
+              <v-col>
+                <up-select v-model="form.status" :items="selectStatus">
+                </up-select>
+              </v-col>
             </v-row>
           </ValidationObserver>
         </v-col>
@@ -128,7 +131,7 @@ export default {
           const { data } = await $getUser(this.userId);
           this.form = data.result;
         } catch (error) {
-          console.log("error", error);
+          console.log("getUser", error);
         }
       }
     },
@@ -138,10 +141,9 @@ export default {
         try {
           // 2. Form 정보 담기
           const params = this.form;
-          console.log("params", params);
           // 3. 사용자 생성
           await $createUser(params);
-          // 4. 성공메세지
+          // TODO 4. 성공메세지
           alert("성공!");
           // 5. 성공 다이얼로그 닫기
           this.$emit("close");
@@ -158,7 +160,7 @@ export default {
           const params = this.form;
           // 3. 사용자 수정
           await $updateUser(params);
-          // 4. 성공메세지
+          // TODO 4. 성공메세지
           alert("성공!");
           // 5. 성공 다이얼로그 닫기
           this.$emit("close");
@@ -173,6 +175,7 @@ export default {
         // 2. 사용자 삭제
         await $deleteUser(this.form.userId);
         // TODO 3. 성공메세지
+        alert("삭제 성공");
         // 4. 성공 다이얼로그 닫기
         this.$emit("close");
       } catch (error) {

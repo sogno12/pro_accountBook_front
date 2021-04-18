@@ -5,7 +5,7 @@
       :type="type"
       @addItem="createMenu"
       @editItem="updateMenu"
-      @deleteItem="deleteMenu"
+      @removeItem="deleteMenu"
     >
       <template #contents>
         <v-col>
@@ -39,13 +39,13 @@
                 </up-text-field>
               </v-col>
               <v-col>
-                <v-select
+                <up-select
                   v-model="form.menuType"
                   label="메뉴타입"
                   :rules="rules.menuType"
                   :items="selectType"
                 >
-                </v-select>
+                </up-select>
               </v-col>
             </v-row>
             <v-row class="ma-0" dense>
