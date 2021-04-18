@@ -99,7 +99,7 @@ export default {
       this.$emit("editItem");
     },
     deleteItem() {
-      this.$emit("deleteItem");
+      this.$emit("removeItem");
     },
     useBtn(type) {
       return this.type.includes(type);

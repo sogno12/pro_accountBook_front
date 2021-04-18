@@ -5,20 +5,19 @@
     v-slot="{ errors }"
     :vid="vid"
   >
-    <v-text-field
+    <v-select
       v-model="innerValue"
       :dense="dense"
       :label="label"
       v-bind="$attrs"
       v-on="$listeners"
       :error-messages="errors"
-      autocomplete="off"
     >
       <!-- wrapping 콤포넌트의 모든 템플릿을 상속 받기 -->
       <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
         <slot :name="slot" v-bind="scope" />
       </template>
-    </v-text-field>
+    </v-select>
   </ValidationProvider>
 </template>
 
@@ -54,8 +53,8 @@ export default {
   },
   data() {
     return {
-      innerValue : null,
-    }
+      innerValue: null,
+    };
   },
   watch: {
     // Handles internal model changes.
