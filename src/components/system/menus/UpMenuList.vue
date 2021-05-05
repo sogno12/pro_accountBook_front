@@ -4,6 +4,7 @@
       <v-row>
         <v-col>
           <up-treeview
+            title="메뉴"
             :data="menus"
             rootIdValue="root"
             rootIdField="upMenuId"
@@ -21,13 +22,6 @@
               >
                 추가
               </v-btn>
-            </template>
-            <template #appendTitle>
-              <v-card-actions>
-                <v-btn tile outlined color="white" dark>
-                  메뉴 추가
-                </v-btn>
-              </v-card-actions>
             </template>
           </up-treeview>
         </v-col>

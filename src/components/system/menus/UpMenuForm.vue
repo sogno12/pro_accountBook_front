@@ -6,6 +6,7 @@
       @addItem="createMenu"
       @editItem="updateMenu"
       @removeItem="deleteMenu"
+      dense
     >
       <template #contents>
         <v-col>

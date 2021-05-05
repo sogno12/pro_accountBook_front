@@ -29,7 +29,7 @@
             <slot name="append" :item="item" :active="active">
               <span>
                 <v-btn
-                  v-if="active"
+                  v-if="active && setBtn('add')"
                   color="success"
                   fab
                   dark
@@ -43,7 +43,7 @@
                 >fa-plus</v-icon>
                 </v-btn>
                 <v-btn
-                  v-if="active"
+                  v-if="active && setBtn('edit')"
                   color="warning"
                   fab
                   dark
@@ -57,7 +57,7 @@
                 >fa-edit</v-icon>
                 </v-btn>
                 <v-btn
-                  v-if="active"
+                  v-if="active && setBtn('delete')"
                   color="error"
                   fab
                   dark
@@ -108,7 +108,11 @@ export default {
     itemIdField: String, // 아이템 ID
     itemLabelField: String, // 아이템 Name
     itemIconField: String, // 아이콘필드명
-  },
+    btnSet: {
+      type: Array,
+      default() { return  ['add', 'edit', 'delete'] }
+    }
+  }, 
   data() {
     return {
       items: [],
@@ -120,6 +124,9 @@ export default {
         const result = this.setChildren(null, true);
         this.items = result;
       }
+    },
+    setBtn(btnType) {
+      return this.btnSet.includes(btnType);
     },
     setChildren(item, isParent) {
       let target = [];
@@ -148,7 +155,7 @@ export default {
       return nodeSet;
     },
     addItem(item) {
-      this.$emit("addItem", item.id);
+      this.$emit("addItem", item.content);
     },
     editItem(item){
         this.$emit("editItem", item.content);

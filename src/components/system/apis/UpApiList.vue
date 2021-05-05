@@ -4,12 +4,15 @@
       <v-col class="ma-2 pa-2">
         <up-table
           v-model="table.selected"
+          v-bind="$attrs"
+          v-on="$listeners"
           :headers="headers"
           :items="table.items"
           :options.sync="table.options"
           :server-items-length="table.totalElements"
           :item-key="table.itemKey"
           :loading="table.loading"
+          :show-select="showSelect"
           @update="getApis"
           dense
           @click:row="rowClick"
@@ -52,8 +55,21 @@
                 <v-btn class="mx-1" color="secondary" @click="searchApi">
                   검색
                 </v-btn>
-                <v-btn class="mx-1" color="success" @click="createApi">
+                <v-btn
+                  v-show="!showSelect"
+                  class="mx-1"
+                  color="success"
+                  @click="createApi"
+                >
                   추가
+                </v-btn>
+                <v-btn
+                  v-show="showSelect"
+                  class="mx-1"
+                  color="success"
+                  @click="selectApi"
+                >
+                  선택
                 </v-btn>
               </v-col>
             </v-row>
@@ -74,6 +90,12 @@ import UpApiForm from "@/components/system/apis/UpApiForm";
 export default {
   components: {
     UpApiForm,
+  },
+  props: {
+    showSelect: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     headers() {
@@ -105,6 +127,21 @@ export default {
         },
       ];
     },
+    selectedApi() {
+      let selected = [];
+      this.table.selected.forEach(e => {
+        selected.push(e.description)
+      })
+      return selected;
+    },
+    selectedId() {
+      let selected = [];
+     
+      this.table.selected.forEach(e => {
+        selected.push(e.apiId);
+      });
+      return selected;
+    }
   },
   data() {
     return {
@@ -137,6 +174,14 @@ export default {
     };
   },
   methods: {
+    init() {
+      this.filters = {
+        apiId: null,
+        description: null,
+        accessScope: null,
+      };
+      this.table.selected = [];
+    },
     searchApi() {
       this.table.options.page = 1;
       this.getApis(0);
@@ -159,14 +204,20 @@ export default {
       }
     },
     rowClick(item) {
-      this.editMode = "edit";
-      this.selectedApiId = item.apiId;
-      this.formDialog = true;
+      if (!this.showSelect) {
+        this.editMode = "edit";
+        this.selectedApiId = item.apiId;
+        this.formDialog = true;
+      }
     },
     async createApi() {
       this.editMode = "add";
       this.selectedApiId = null;
       this.formDialog = true;
+    },
+    async selectApi() {
+      this.init();
+      this.$emit("select", this.selectedId);
     },
     close() {
       this.selectedApiId = null;

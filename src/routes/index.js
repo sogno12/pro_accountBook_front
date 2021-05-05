@@ -53,6 +53,12 @@ const routes = [
         component: () => import("@/views/system/Apis.vue"),
       },
       {
+        path: UP_PAGE.MODULES,
+        name: "Modules",
+        beforeEnter: checkAuth,
+        component: () => import("@/views/system/Modules.vue"),
+      },
+      {
         path: UP_PAGE.ROLES,
         name: "Roles",
         beforeEnter: checkAuth,

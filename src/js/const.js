@@ -37,6 +37,7 @@ export const UP_PAGE = {
    */
   MENUS: '/system/menus',
   APIS: '/system/apis',
+  MODULES: '/system/modules',
   ROLES: '/system/roles',
   RULES: '/system/rules',
 

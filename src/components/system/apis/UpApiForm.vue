@@ -173,6 +173,7 @@ export default {
           // TODO 4. 성공메세지
           alert("성공!");
           // 5. 성공 다이얼로그 닫기
+          this.init();
           this.$emit("close");
         } catch (error) {
           console.log("createApi", error);
@@ -190,6 +191,7 @@ export default {
           // TODO 4. 성공메세지
           alert("성공!");
           // 5. 성공 다이얼로그 닫기
+          this.init();
           this.$emit("close");
         } catch (error) {
           console.log("updateApi", error);
